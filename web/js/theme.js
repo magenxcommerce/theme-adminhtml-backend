@@ -93,7 +93,6 @@ define('globalNavigationScroll', [
 
         } else { // static menu cases
             checkRemoveClass(menu, fixedClassName);
-            menu.css('top', 'auto');
         }
 
         //  Save previous window scrollTop
@@ -268,18 +267,17 @@ define('globalNavigation', [
             if (subMenu.length) {
                 e.preventDefault();
             }
+
+            menuItem.addClass('_show')
+                .siblings(menuItemSelector)
+                .removeClass('_show');
+
+            subMenu.attr('aria-expanded', 'true');
+
             closeBtn.on('click', close);
 
-            if ($(menuItem).hasClass('_show')) {
-                closeBtn.trigger('click');
-            } else {
-                menuItem.addClass('_show')
-                    .siblings(menuItemSelector)
-                    .removeClass('_show');
-                subMenu.attr('aria-expanded', 'true');
-                this.overlay.show(0).on('click', close);
-                this.menuLinks.last().off('blur');
-            }
+            this.overlay.show(0).on('click', close);
+            this.menuLinks.last().off('blur');
         },
 
         /**
@@ -601,7 +599,7 @@ define('js/theme', [
 ], function ($, keyboardHandler) {
     'use strict';
 
-    /* @TODO refactor collapsible as widget and avoid logic binding with such a general selectors */
+    /* @TODO refactor collapsable as widget and avoid logic binding with such a general selectors */
     $('.collapse').collapsable();
 
     $.each($('.entry-edit'), function (i, entry) {
